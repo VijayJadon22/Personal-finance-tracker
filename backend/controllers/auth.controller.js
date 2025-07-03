@@ -60,21 +60,25 @@ export const loginUser = async (req, res) => {
 }
 export const logoutUser = async (req, res) => {
     try {
-         res.clearCookie("token", {
+        res.clearCookie("token", {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: "Strict"
         });
         return res.status(200).json({ success: true, message: "Logged out successfully" });
     } catch (error) {
-         console.error("Logout Error:", error.message);
+        console.error("Logout Error:", error.message);
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 }
 export const getMe = async (req, res) => {
     try {
-
+        if (!req.user) {
+            return res.status(404).json({ success: false, message: "User not found" });
+        }
+        return res.status(200).json({ success: true, user: req.user });
     } catch (error) {
-
+        console.error("Error fetching user:", error.message);
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 }
