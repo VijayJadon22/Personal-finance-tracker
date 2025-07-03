@@ -1,6 +1,6 @@
 
-export const generateTokenAndSetCookies = (user, res) => {
-    const token = user.generateToken(user._id);
+export const generateTokenAndSetCookies = async (user, res) => {
+    const token = await user.generateToken(user._id);
 
     const options = {
         httpOnly: true,
