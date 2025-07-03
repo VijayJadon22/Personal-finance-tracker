@@ -23,7 +23,24 @@ export const addExpense = async (req, res) => {
         return res.status(500).json({ success: false, message: error.message });
     }
 }
+export const updateExpense = async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updated = await Expense.findOneAndUpdate(
+            { _id: id, user: req.user._id },
+            { ...req.body },
+            { new: true }
+        );
 
+        if (!updated) return res.status(404).json({ success: false, message: "Expense not found" });
+
+        return res.status(200).json({ message: "Expense updated successfully", success: true, expense: updated });
+
+    } catch (error) {
+        console.log(`Error in updateExpense controller: `, error.message);
+        return res.status(500).json({ success: false, message: error.message });
+    }
+}
 export const deleteExpense = async (req, res) => {
     try {
 
