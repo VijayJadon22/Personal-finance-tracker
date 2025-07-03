@@ -26,8 +26,10 @@ export const setBudget = async (req, res) => {
 }
 export const getBudgets = async (req, res) => {
     try {
-
+        const budgets = await Budget.find({ user: req.user._id });
+        return res.status(200).json({ success: true, budgets });
     } catch (error) {
-
+        console.error("Get Budgets Error:", error.message);
+        res.status(500).json({ success: false, message: "Server Error" });
     }
 }
