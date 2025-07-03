@@ -15,7 +15,7 @@ export const signupUser = async (req, res) => {
 
         const user = await User.create({ name, email, password });
 
-        generateTokenAndSetCookies(user, res);
+        await generateTokenAndSetCookies(user, res);
 
         return res.status(201).json({
             message: "User created successfully",
@@ -44,9 +44,9 @@ export const loginUser = async (req, res) => {
         }
 
         const isPasswordMatch = await user.comparePassword(password);
-        if (isPasswordMatch) return res.status(400).json({ success: false, message: "Inavlid Password" });
+        if (!isPasswordMatch) return res.status(400).json({ success: false, message: "Inavlid Password" });
 
-        generateTokenAndSetCookies(user, res);
+        await generateTokenAndSetCookies(user, res);
 
         return res.status(200).json({
             message: "User logged in successfully",
@@ -71,7 +71,7 @@ export const logoutUser = async (req, res) => {
         return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 }
-export const getMe = async (req, res) => {
+export const getUser = async (req, res) => {
     try {
         if (!req.user) {
             return res.status(404).json({ success: false, message: "User not found" });
