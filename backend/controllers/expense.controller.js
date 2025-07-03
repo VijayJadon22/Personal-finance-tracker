@@ -4,12 +4,13 @@ import Expense from "../models/expense.model.js";
 export const addExpense = async (req, res) => {
     try {
         const { amount, category, paymentMethod, notes } = req.body;
-        const userId = req.user._id; //this we will get because of authMiddleware
         if (!amount || !category || !paymentMethod) {
             return res.status(400).json({ message: "Required fields missing", success: false });
         }
 
-        const expense = new Expense.create({
+        const userId = req.user._id; //this we will get because of authMiddleware
+
+        const expense = await Expense.create({
             user: userId,
             amount,
             category,
@@ -43,14 +44,14 @@ export const updateExpense = async (req, res) => {
 }
 export const deleteExpense = async (req, res) => {
     try {
-        const { id } = req.parans;
+        const { id } = req.params;
 
-        await Expense.findOneAndDelete({ _id: id, user: req.user._id });
+        const deleted=await Expense.findOneAndDelete({ _id: id, user: req.user._id });
         if (!deleted) return res.status(404).json({ success: false, message: "Expense not found" });
 
         return res.status(200).json({ success: true, message: "Expense deleted" });
     } catch (error) {
-        console.error("Delete Expense Error:", err.message);
+        console.error("Delete Expense Error:", error.message);
         res.status(500).json({ success: false, message: error.message });
     }
 }
@@ -60,6 +61,7 @@ export const getExpenses = async (req, res) => {
         return res.status(200).json({
             message: "Expenses fetched",
             sucess: true,
+            expenses
         })
     } catch (error) {
         console.error("Get Expenses Error:", err.message);
