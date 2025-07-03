@@ -24,13 +24,15 @@ const userSchema = new mongoose.Schema({
 
 userSchema.pre("save", async function (next) {
     if (this.isModified("password") || this.isNew) {
-        const saltRounds  = 10;
-        this.password = await bcrypt.hash(this.password, saltRounds );
+        const saltRounds = 10;
+        this.password = await bcrypt.hash(this.password, saltRounds);
     }
     next();
 });
 
-
+userSchema.methods.comparePassword = async function (password) {
+    return bcrypt.compare(password, this.password);
+}
 userSchema.methods.generateToken = async function (userId) {
     return jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
