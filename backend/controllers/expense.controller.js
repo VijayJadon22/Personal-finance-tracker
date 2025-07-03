@@ -56,8 +56,16 @@ export const deleteExpense = async (req, res) => {
 }
 export const getExpenses = async (req, res) => {
     try {
-
+        const expenses = await Expense.find({ user: req.user._id }).sort({ date: -1 });
+        return res.status(200).json({
+            message: "Expenses fetched",
+            sucess: true,
+        })
     } catch (error) {
-
+        console.error("Get Expenses Error:", err.message);
+        res.status(500).json({
+            success: false,
+            message: "Server Error",
+        });
     }
 }
