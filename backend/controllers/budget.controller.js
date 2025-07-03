@@ -75,8 +75,8 @@ export const getBudgetAlerts = async (req, res) => {
         });
 
         res.status(200).json({ success: true, alerts });
-    } catch (err) {
-        console.error("Alert Fetch Error:", err.message);
+    } catch (error) {
+        console.error("Alert Fetch Error:", error.message);
         res.status(500).json({ success: false, message: "Server Error" });
     }
 };
