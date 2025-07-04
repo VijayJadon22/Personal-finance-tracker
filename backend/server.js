@@ -16,10 +16,26 @@ dotenv.config();
 
 const app = express();
 
-app.use(cors({
-  origin: "https://personal-finance-tracker-liard.vercel.app" || "http://localhost:5173", 
-  credentials: true,
-}));
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://personal-finance-tracker-liard.vercel.app",
+  "https://personal-finance-git-91719f-vijay-pratap-singh-jadons-projects.vercel.app",
+  "https://personal-finance-tracker-mw21u9hfs.vercel.app",
+];
+
+app.use(
+  cors({
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    credentials: true,
+  })
+);
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -33,7 +49,16 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/suggestions", suggestionRoutes);
 app.use("/api/reports", reportRoutes);
 
+// Handle 404 Not Found
+app.use((req, res, next) => {
+  res.status(404).json({
+    success: false,
+    message: "Route not found",
+  });
+});
+
+
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-    connectToDB();
+  console.log(`Server running on port ${PORT}`);
+  connectToDB();
 })
