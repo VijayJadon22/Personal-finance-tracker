@@ -1,12 +1,20 @@
 import Database from "better-sqlite3";
 import path from "path";
+import fs from "fs";
 import { fileURLToPath } from "url";
 
 // Required for ESM __dirname workaround
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const dbPath = path.join(__dirname, "../data/reports.db");
+// Ensure the 'data' folder exists
+const dataDir = path.join(__dirname, "../data");
+if (!fs.existsSync(dataDir)) {
+    fs.mkdirSync(dataDir);
+}
+
+// SQLite DB path
+const dbPath = path.join(dataDir, "reports.db");
 const db = new Database(dbPath);
 
 // Create table if not exists
