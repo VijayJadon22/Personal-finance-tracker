@@ -1,8 +1,8 @@
 import { useExpenseContext } from "../../context/ExpenseContext";
 import ExpenseItem from "./ExpenseItem";
 
-const ExpenseList = ({ onEdit }) => {
-  const { expenses, deleteExpense } = useExpenseContext();
+const ExpenseList = ({ expenses, onEdit }) => {
+  const { deleteExpense } = useExpenseContext();
 
   if (!expenses.length) {
     return <p className="text-center text-gray-500">No expenses yet.</p>;
