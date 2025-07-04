@@ -12,6 +12,7 @@ import {
   LineElement,
 } from "chart.js";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
+import { useExpenseContext } from "../context/ExpenseContext.jsx";
 
 ChartJS.register(
   ArcElement,
@@ -24,6 +25,7 @@ ChartJS.register(
 );
 
 const Dashboard = () => {
+  const { loading } = useExpenseContext();
   const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -38,6 +40,8 @@ const Dashboard = () => {
 
     fetchDashboard();
   }, []);
+
+  if (loading) return <LoadingSpinner />;
 
   if (!data || !data.totalSpent) {
     return (
