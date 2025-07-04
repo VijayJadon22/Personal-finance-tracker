@@ -16,22 +16,13 @@ dotenv.config();
 
 const app = express();
 
-const allowedOrigins = [
-  "http://localhost:5173",
-  "https://personal-finance-tracker-liard.vercel.app",
-  "https://personal-finance-git-91719f-vijay-pratap-singh-jadons-projects.vercel.app",
-  "https://personal-finance-tracker-mw21u9hfs.vercel.app",
-];
-
 app.use(
   cors({
-    origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
+    origin: [
+      "https://personal-finance-tracker-liard.vercel.app",
+      "https://personal-finance-git-91719f-vijay-pratap-singh-jadons-projects.vercel.app",
+      "https://personal-finance-tracker-mw21u9hfs.vercel.app"
+    ],
     credentials: true,
   })
 );
