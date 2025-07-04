@@ -10,8 +10,8 @@ const defaultForm = {
   notes: "",
 };
 
-const categories = ["Food", "Rent", "Shopping", "Travel", "Health", "Other"];
-const methods = ["Cash", "Credit Card", "UPI", "Bank Transfer"];
+const categories = ["Food", "Rent", "Shopping", "Health", "Travel", "Other"];
+const methods = ["UPI", "Credit Card", "Cash", "Debit Card", "Net Banking", "Other"];
 
 const ExpenseForm = ({ initialData = null, onClose }) => {
   const [form, setForm] = useState(defaultForm);
