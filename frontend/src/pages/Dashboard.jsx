@@ -39,7 +39,7 @@ const Dashboard = () => {
     fetchDashboard();
   }, []);
 
-  if (!data) return <LoadingSpinner />;
+  // if (!data) return <h1></h1>;
 
   const {
     totalSpent,
