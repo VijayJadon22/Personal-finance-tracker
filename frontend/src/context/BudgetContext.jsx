@@ -17,7 +17,7 @@ export const BudgetProvider = ({ children }) => {
       const response = await axios.get("/budgets");
       setBudgets(response.data.budgets);
     } catch (error) {
-      toast.error("Failed to load budgets");
+    //   toast.error("Failed to load budgets");
     } finally {
       setLoading(false);
     }
@@ -28,7 +28,7 @@ export const BudgetProvider = ({ children }) => {
       const res = await axios.get("/budgets/alerts");
       setAlerts(res.data.alerts);
     } catch (error) {
-      toast.error("Failed to load budget alerts");
+    //   toast.error("Failed to load budget alerts");
     }
   };
 

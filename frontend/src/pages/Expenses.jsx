@@ -41,7 +41,7 @@ const ExpensesPage = () => {
 
   return (
     <div className="p-4 max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold mb-4">My Expenses</h1>
+      <h1 className="text-2xl font-bold mb-4 text-gray-600">My Expenses</h1>
 
       {/* Show add form only when not editing */}
       {!editItem && (

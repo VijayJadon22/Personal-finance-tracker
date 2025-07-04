@@ -18,7 +18,7 @@ export const ExpenseProvider = ({ children }) => {
       const response = await axios.get("/expenses");
       setExpenses(response.data.expenses);
     } catch (error) {
-      toast.error("Failed to load expenses");
+      // toast.error("Failed to load expenses");
       console.error("Expense fetch error:", error.message);
     } finally {
       setLoading(false);

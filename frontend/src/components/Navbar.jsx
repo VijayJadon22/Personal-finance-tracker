@@ -1,54 +1,54 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { useAuthContext } from "../context/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const navigate = useNavigate();
 
+  const { user, logoutUser } = useAuthContext();
   // Replace with your actual auth check logic
-  const isAuthenticated = true;
+  const isAuthenticated = user || false;
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    navigate("/login");
+  const handleLogout = async () => {
+    await logoutUser();
   };
 
   return (
-    <nav className="bg-white shadow-md px-4 py-3 sticky top-0 z-50">
+    <nav className="w-full bg-cyan-700 text-white  shadow-md py-3 sticky top-0 z-50 px-10">
       <div className="container mx-auto flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold text-blue-600">
-          💰 Finance Tracker+
+        <Link to="/" className="text-xl font-bold text-white flex items-center gap-2">
+          <img src="/expense-logo.png" alt="expense-logo" className="w-8"/> Finance Tracker
         </Link>
 
         {/* Desktop Menu */}
         <div className="hidden md:flex gap-6 items-center">
           {isAuthenticated ? (
             <>
-              <Link to="/dashboard" className="hover:text-blue-500">
-                Dashboard
+              <Link to={"/"} className="hover:text-cyan-300 cursor-pointer font-semibold">
+                Hi, {user?.name.split(" ")[0]}
               </Link>
-              <Link to="/expenses" className="hover:text-blue-500">
+              <Link to="/expenses" className="hover:text-cyan-300 font-semibold">
                 Expenses
               </Link>
-              <Link to="/budget" className="hover:text-blue-500">
+              <Link to="/budget" className="hover:text-cyan-300 font-semibold">
                 Budget
               </Link>
-              <Link to="/reports" className="hover:text-blue-500">
+              <Link to="/reports" className="hover:text-cyan-300 font-semibold">
                 Reports
               </Link>
               <button
                 onClick={handleLogout}
-                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded"
+                className=" hover:bg-cyan-600 text-white px-3 py-1 rounded cursor-pointer font-semibold"
               >
                 Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:text-blue-500">
+              <Link to="/login" className="hover:text-cyan-300 font-semibold">
                 Login
               </Link>
-              <Link to="/signup" className="hover:text-blue-500">
+              <Link to="/signup" className="hover:text-cyan-300 font-semibold">
                 Signup
               </Link>
             </>
@@ -58,7 +58,7 @@ const Navbar = () => {
         {/* Mobile Hamburger */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-gray-600"
+          className="md:hidden text-gray-600 cursor-pointer"
         >
           ☰
         </button>
