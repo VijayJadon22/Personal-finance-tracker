@@ -19,9 +19,8 @@ const app = express();
 app.use(
   cors({
     origin: [
-      "https://personal-finance-tracker-liard.vercel.app",
-      "https://personal-finance-git-91719f-vijay-pratap-singh-jadons-projects.vercel.app",
-      "https://personal-finance-tracker-mw21u9hfs.vercel.app"
+      "http://localhost:5173", // local dev frontend
+      "https://personal-finance-tracker-iota-three.vercel.app" // deployed frontend
     ],
     credentials: true,
   })
