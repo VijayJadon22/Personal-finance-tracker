@@ -39,7 +39,17 @@ const Dashboard = () => {
     fetchDashboard();
   }, []);
 
-  // if (!data) return <h1></h1>;
+  if (!data || !data.totalSpent) {
+    return (
+      <div className="p-4 max-w-4xl mx-auto text-center text-gray-500">
+        <h2 className="text-xl font-semibold mb-2">Dashboard</h2>
+        <p>
+          No expenses found yet. Add some expenses to see your dashboard
+          summary.
+        </p>
+      </div>
+    );
+  }
 
   const {
     totalSpent,
